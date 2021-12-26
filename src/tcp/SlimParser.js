@@ -2,6 +2,14 @@
  * Created by noamc on 1/3/16.
  */
 
+function escapeJsonCtrlChars(str) {
+    return str.replace(/\n/g, '\\n')
+        .replace(/\r/g, '\\r')
+        .replace(/\t/g, '\\t')
+        .replace(/\f/g, '\\f')
+        .replace(/"/g, '\\"');
+}
+
 var JSON5 = require('json5'),
     LOG = require("./../utils/LOG").LOG;
 
@@ -86,7 +94,7 @@ function SlimParser() {
             }
         }
 
-        return '"' + val.replace(/"/g, '\\"') + '"'
+        return '"' + escapeJsonCtrlChars(val) + '"'
     }
 
     function isNumber(str){
